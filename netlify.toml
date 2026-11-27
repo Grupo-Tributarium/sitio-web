@@ -1,0 +1,7 @@
+# Netlify: genera el blog desde content/blog/*.md y publica la carpeta tal cual.
+[build]
+  command = "node scripts/build-blog.mjs"
+  publish = "."
+
+[build.environment]
+  NODE_VERSION = "20"

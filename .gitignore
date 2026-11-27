@@ -1,0 +1,40 @@
+# Sistema
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+
+# Editores
+.vscode/
+.idea/
+*.swp
+
+# Dependencias y builds (por si se agregan más adelante)
+node_modules/
+dist/
+.cache/
+
+# Plataformas de deploy
+.vercel/
+.netlify/
+
+# Variables de entorno y secretos: nunca se suben
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Archivos temporales, respaldos y comprimidos
+*.log
+_before.html
+_inline.html
+*.zip
+*.bak
+*.orig
+*~
+tmp/
+temp/
+
+# Herramientas locales
+.claude/
