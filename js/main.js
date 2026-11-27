@@ -37,7 +37,7 @@
       cta: 'Repactar deuda en Tesorería',
       h1: 'Tesorería te cobra intereses impagables. Negociemos un convenio que sí puedas pagar.',
       lead: 'Cuando la deuda de IVA o Renta crece más rápido que tu flujo de caja, el convenio web de la TGR suele exigir un pie que no tienes. Preparamos y negociamos un Convenio Especial con condiciones acordes a la realidad de tu empresa.',
-      facts: [['Para quién', 'Pymes y empresas con deuda fiscal de IVA, Renta o Contribuciones'], ['Modalidad', '100% remota. Si el convenio debe tramitarse presencialmente, lo hacemos en Antofagasta'], ['Plazo referencial', '2 a 6 semanas, según la oficina TGR y el monto']],
+      facts: [['Para quién', 'Pymes y empresas con deuda fiscal de IVA, Renta o Contribuciones'], ['Modalidad', '100% remota. Si el convenio debe tramitarse presencialmente, lo hacemos nosotros'], ['Plazo referencial', '2 a 6 semanas, según la oficina TGR y el monto']],
       how: [['Diagnóstico de la deuda', 'Revisamos tu Certificado de Deuda Fiscal: montos, períodos, intereses, multas y si hay cobranza judicial en curso.'], ['Propuesta financiera', 'Armamos una propuesta de pie y cuotas que tu empresa pueda sostener, con los antecedentes que la respaldan.'], ['Negociación con la TGR', 'Presentamos la solicitud de Convenio Especial y negociamos condiciones y eventuales condonaciones de intereses y multas.'], ['Seguimiento', 'Te acompañamos en el pago de las cuotas para que el convenio no caduque y no vuelva el riesgo de embargo.']],
       req: ['Certificado de Deuda Fiscal TGR actualizado', 'RUT de la empresa y del representante legal', 'Clave Tributaria para revisar tu situación en el SII', 'Antecedentes de flujo de caja o ventas recientes', 'Notificaciones de cobranza o embargo, si las hay'],
       time: [['Diagnóstico inicial', '24–48 h', 12, 1], ['Preparación de la propuesta', '1–2 semanas', 35, 1], ['Negociación y resolución TGR', '2–6 semanas', 80, 0]],
@@ -168,7 +168,7 @@
         ['Si firmo el convenio, ¿se detiene el embargo?', 'Un convenio vigente normalmente suspende las acciones de cobro mientras se cumplan las cuotas. Lo revisamos en tu caso concreto antes de prometerte un resultado.'],
         ['No tengo para pagar el pie que me pide la web. ¿Igual se puede negociar?', 'Sí, para eso existe el Convenio Especial. Armamos una propuesta de pie y cuotas que tu empresa pueda sostener, con los antecedentes que la respaldan, y la negociamos con la TGR. También se pueden pedir condonaciones de intereses y multas, según el caso.'],
         ['¿Cuánto se demora Tesorería en aprobar el convenio?', 'Como referencia, entre 2 y 6 semanas, según la oficina de la TGR y el monto de la deuda.'],
-        ['¿Tengo que ir en persona a Tesorería?', 'No. Trabajamos 100% en línea. Si tu convenio debe tramitarse de forma presencial, lo hacemos nosotros en Antofagasta.'],
+        ['¿Tengo que ir en persona a Tesorería?', 'No. Trabajamos 100% en línea. Si tu convenio debe tramitarse de forma presencial, lo hacemos nosotros.'],
         ['¿Qué pasa si después no puedo pagar una cuota?', 'El convenio puede caducar y volvería el riesgo de embargo. Por eso te acompañamos durante el pago de las cuotas para evitar que eso pase.']
       ]
     },
