@@ -11,6 +11,7 @@ Sitio estático (HTML, CSS y JavaScript sin dependencias) para Tributarium, abog
 │   └── main.css          Todos los estilos: tokens de marca, componentes y animaciones
 ├── js/
 │   ├── main.js           Contenido (servicios, preguntas) y lógica: rutas, animaciones, acordeones
+│   ├── gtm-init.js       Inicio de Google Tag Manager
 │   └── posts.js          Artículos del blog (generado automáticamente, no editar)
 ├── content/blog/         Un archivo .md por artículo del blog
 ├── scripts/
@@ -54,7 +55,8 @@ El único paso de build es generar el blog (`node scripts/build-blog.mjs`, sin d
 - El sitio no envía datos a ningún servidor: el formulario de contacto es una vista previa y no se transmite nada.
 - Las rutas internas (`#desbloqueo-sii`, `#blog`, etc.) solo aceptan valores de una lista fija, así que la URL no puede inyectar contenido en la página.
 - Los enlaces externos (WhatsApp) abren con `rel="noopener"`.
-- `_headers` y `vercel.json` activan: Content-Security-Policy (solo scripts propios), protección contra iframes de terceros, HTTPS obligatorio (HSTS), `nosniff`, `Referrer-Policy` y `Permissions-Policy` (sin cámara, micrófono ni ubicación).
+- `_headers` y `vercel.json` activan: Content-Security-Policy (scripts propios y de Google Tag Manager), protección contra iframes de terceros, HTTPS obligatorio (HSTS), `nosniff`, `Referrer-Policy` y `Permissions-Policy` (sin cámara, micrófono ni ubicación).
+- Google Tag Manager (contenedor `GTM-KJN464LP`): se carga en `index.html` y se inicializa en `js/gtm-init.js`. La política de seguridad permite Tag Manager, Google Analytics 4, Google Ads y el modo vista previa. Si en GTM se agregan etiquetas de otros proveedores (Meta, LinkedIn, Hotjar...) o etiquetas de HTML personalizado, hay que sumar sus dominios en `_headers` y `vercel.json`; si no, el navegador las bloquea.
 - Fuentes: se cargan desde Google Fonts, permitido en la política de seguridad. Si se alojan en el propio sitio, se pueden quitar esos dominios de la política.
 
 ## Blog: cómo publicar un artículo

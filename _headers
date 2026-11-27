@@ -1,8 +1,10 @@
 # Cabeceras de seguridad para Netlify y Cloudflare Pages.
 # (Vercel usa vercel.json; GitHub Pages no permite cabeceras propias.)
+# La política permite Google Tag Manager, Google Analytics 4, Google Ads y el modo vista previa de GTM.
+# Si se agregan etiquetas de otros proveedores (Meta, LinkedIn, Hotjar...) hay que sumar sus dominios aquí y en vercel.json.
 
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://*.googletagmanager.com https://tagmanager.google.com https://www.googleadservices.com https://googleads.g.doubleclick.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://tagmanager.google.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https://*.googletagmanager.com https://*.google-analytics.com https://ssl.gstatic.com https://www.gstatic.com https://googleads.g.doubleclick.net https://www.google.com https://www.google.cl; connect-src 'self' https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://*.doubleclick.net https://www.google.com https://pagead2.googlesyndication.com; frame-src https://*.googletagmanager.com https://td.doubleclick.net; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
