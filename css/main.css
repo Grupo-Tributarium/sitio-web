@@ -358,31 +358,38 @@ body:not(.has-hero) #app { padding-top: 92px; }
   .tabbar button { font-size: .875rem; padding: .9rem .8rem 1.3rem; flex: 0 0 auto; width: 15rem; white-space: normal; }
 }
 
-/* Soluciones en el teléfono: collage que se arma al bajar + tarjetas que se apilan */
-.svc-mintro, .svc-stack { display: none; }
+/* Soluciones en el teléfono: tarjeta azul que se expande + tarjetas que se apilan */
+.svc-mstage, .svc-stack { display: none; }
 @media (max-width: 899px) {
   .svc-tabs { display: none; }
   .svc { overflow-x: clip; }
-  .svc-mintro { --mp: 0; display: block; position: relative; width: min(calc(100% - 2 * max(var(--page-gutter), 20px)), 560px); margin-inline: auto; aspect-ratio: 1 / .98; }
-  .mi { position: absolute; border-radius: 18px; overflow: hidden; will-change: transform, opacity; }
-  .mi img { width: 100%; height: 100%; object-fit: cover; transform: scale(calc(1.2 - .14 * var(--mp))); }
-  .mi-a { left: 0; top: 0; width: 60%; height: 70%; opacity: calc(.3 + .7 * var(--mp)); transform: translate3d(calc(-16% * (1 - var(--mp))), calc(12% * (1 - var(--mp))), 0) rotate(calc(-4deg * (1 - var(--mp)))); }
-  .mi-a img { object-position: 22% 40%; }
-  .mi-b { right: 0; top: 9%; width: 37%; height: 52%; opacity: calc(.3 + .7 * var(--mp)); transform: translate3d(calc(20% * (1 - var(--mp))), calc(-10% * (1 - var(--mp))), 0) rotate(calc(5deg * (1 - var(--mp)))); }
-  .mi-d { left: 7%; right: 0; bottom: 0; background: var(--color-white); border: 1px solid var(--color-line); box-shadow: 0 24px 40px -28px rgba(23, 59, 102, .55); padding: 1rem 1.1rem; display: grid; gap: .5rem; opacity: clamp(0, calc(var(--mp) * 1.7 - .5), 1); transform: translate3d(0, calc(30% * (1 - var(--mp))), 0); }
-  .mi-d .k { font-size: .6875rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--color-muted); }
-  .mi-d .row { display: flex; justify-content: space-between; align-items: center; gap: .75rem; font-size: .8125rem; color: var(--color-text); padding-top: .45rem; border-top: 1px solid var(--color-line); opacity: 0; translate: 0 8px; transition: opacity .6s var(--ease-standard), translate .8s var(--ease-editorial); }
-  .mi-d .row:nth-child(3) { transition-delay: .12s; } .mi-d .row:nth-child(4) { transition-delay: .24s; }
-  .mi-d .pill { font-size: .6875rem; padding: .2rem .55rem; }
-  .svc-mintro.done .row { opacity: 1; translate: 0 0; }
+  .svc-sticky { padding-top: clamp(1.5rem, 6vw, 2.5rem); padding-bottom: clamp(7.5rem, 32vw, 10rem); }
+  .svc-final { gap: clamp(1rem, 5vw, 2rem); }
+  /* El título real queda para lectores de pantalla; en pantalla se ve el de la tarjeta azul. */
+  .svc-head { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; padding: 0; }
+
+  .svc-mstage { display: block; position: relative; height: 250vh; }
+  .ms-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; }
+  .ms-box { position: absolute; left: max(var(--page-gutter), 18px); right: max(var(--page-gutter), 18px); top: calc(var(--header-h) + 14px); bottom: 22px; }
+  .ms-slot { position: absolute; left: 0; right: 0; top: 0; height: 62%; }
+  .ms { position: absolute; bottom: 0; height: calc(38% - 12px); border-radius: 22px; overflow: hidden; will-change: transform, opacity; transform-origin: 50% 100%; }
+  .ms.ms-a { left: 0; top: auto; width: calc(56% - 6px); background: var(--color-surface); }
+  .ms.ms-a svg { inset: 6% 10%; width: 80%; height: 88%; }
+  .ms.ms-b { right: 0; width: calc(44% - 6px); }
+  .ms-b img { width: 100%; height: 100%; object-fit: cover; }
+  .ms-bg { position: absolute; inset: 0; background: var(--color-primary); will-change: clip-path, opacity; z-index: 1; }
+  .ms-h { position: absolute; left: 50%; top: 50%; z-index: 2; width: min(calc(100% - 2 * max(var(--page-gutter), 18px) - 2.5rem), 30rem); translate: -50% -50%; margin: 0; text-align: center; color: var(--color-background); font-family: var(--font-heading); font-size: clamp(1.9rem, 8.6vw, 2.7rem); font-weight: 600; line-height: 1.1; letter-spacing: -0.025em; text-wrap: balance; will-change: transform; }
+  .ms-h .hl-pyme { color: inherit; }
+  .svc-mstage.ms-static { height: auto; }
+  .svc-mstage.ms-static .ms-sticky { position: relative; height: min(100vh, 760px); }
 
   .svc-stack { display: grid; gap: 1.25rem; width: min(calc(100% - 2 * max(var(--page-gutter), 16px)), 560px); margin-inline: auto; }
-  .sc { --k: 0; position: sticky; top: calc(var(--header-h) + .5rem + var(--i) * 12px); }
-  .sc-in { position: relative; background: var(--color-white); border: 1px solid var(--color-line); border-radius: 24px; padding: 10px 10px 1.4rem; box-shadow: 0 -14px 34px -26px rgba(23, 59, 102, .45); transform-origin: 50% 0; transform: scale(calc(1 - .06 * var(--k))); transition: opacity .8s var(--ease-standard), translate 1s var(--ease-editorial); }
-  .sc-in::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--color-primary); opacity: calc(var(--k) * .22); pointer-events: none; }
-  .sc:not(.in) .sc-in { opacity: 0; translate: 0 36px; }
+  .sc { position: sticky; top: calc(var(--header-h) + .5rem + var(--i) * 12px); }
+  .sc-in { position: relative; background: var(--color-white); border: 1px solid var(--color-line); border-radius: 24px; padding: 10px 10px 1.4rem; box-shadow: 0 -14px 34px -26px rgba(23, 59, 102, .45); transform-origin: 50% 0; will-change: transform; transition: opacity .9s var(--ease-standard), translate 1.1s var(--ease-editorial); }
+  .sc-shade { position: absolute; inset: 0; border-radius: inherit; background: var(--color-primary); opacity: 0; pointer-events: none; z-index: 2; }
+  .sc:not(.in) .sc-in { opacity: 0; translate: 0 40px; }
   .sc-img { position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 16 / 10; }
-  .sc-img img { width: 100%; height: 100%; object-fit: cover; transform: scale(calc(1.04 + .08 * var(--k))); }
+  .sc-img img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.04); will-change: transform; }
   .sc-n { position: absolute; left: 12px; top: 12px; font-size: .75rem; font-weight: 600; letter-spacing: .04em; color: var(--color-primary); background: rgba(255, 255, 255, .88); padding: .3rem .65rem; border-radius: 999px; }
   .sc-txt { display: grid; gap: .65rem; padding: 1.1rem .85rem 0; }
   .sc-txt .pill { justify-self: start; }

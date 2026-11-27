@@ -292,14 +292,14 @@
           '<div class="row"><span>Prescripción 2019</span><span class="pill">En trámite</span></div></div>' +
       '</div>' +
       '<div class="svc-final">' +
-        '<div class="svc-mintro" aria-hidden="true">' +
-          '<div class="mi mi-a"><img src="assets/img/socios.jpg" alt="" loading="lazy"></div>' +
-          '<div class="mi mi-b"><img src="assets/img/notas.jpg" alt="" loading="lazy"></div>' +
-          '<div class="mi mi-d"><span class="k">Estado del caso · ejemplo</span>' +
-            '<div class="row"><span>Convenio TGR</span><span class="pill pill--live">Aprobado</span></div>' +
-            '<div class="row"><span>Facturación SII</span><span class="pill pill--live">Habilitada</span></div>' +
-            '<div class="row"><span>Prescripción 2019</span><span class="pill">En trámite</span></div></div>' +
-        '</div>' +
+        '<div class="svc-mstage" aria-hidden="true"><div class="ms-sticky">' +
+          '<div class="ms-box"><div class="ms-slot"></div>' +
+            '<div class="ms ms-a tile-a">' + constellation() + '</div>' +
+            '<div class="ms ms-b"><img src="assets/img/notas.jpg" alt="" loading="lazy"></div>' +
+          '</div>' +
+          '<div class="ms-bg"></div>' +
+          '<p class="ms-h">Te ayudamos a solucionar los problemas tributarios de <span class="hl-pyme ms-hl">tu pyme</span>.</p>' +
+        '</div></div>' +
         '<div class="svc-head"><h2 id="solTitle">Te ayudamos a solucionar los problemas tributarios de <span class="hl-pyme">tu pyme</span>.</h2><a class="svc-arrow" href="#soluciones-detalle" aria-label="Bajar a los problemas y soluciones"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 4v15M5.5 12.5L12 19l6.5-6.5"/></svg></a></div>' +
         '<div class="svc-tabs" id="soluciones-detalle">' +
           '<div class="tabbar" role="tablist" aria-label="Soluciones por problema">' + SERVICES.map(function (s, i) { return '<button type="button" role="tab" id="tab-' + i + '" aria-controls="panel-' + i + '" aria-selected="' + (i === 0) + '" tabindex="' + (i === 0 ? 0 : -1) + '">' + esc(s.q) + '</button>'; }).join('') + '<span class="tab-ind"><i></i></span></div>' +
@@ -312,7 +312,7 @@
         '</div>' +
         '<div class="svc-stack" id="soluciones-stack">' + SERVICES.map(function (s, i) {
           var img = { 'convenio-especial-tgr': 'convenio', 'desbloqueo-sii': 'sii', 'prescripcion-tributaria': 'prescripcion', 'liquidacion-y-reestructuracion': 'liquidacion' }[s.slug];
-          return '<article class="sc" style="--i:' + i + '"><div class="sc-in">' +
+          return '<article class="sc" style="--i:' + i + '"><div class="sc-in"><span class="sc-shade"></span>' +
             '<div class="sc-img"><img src="assets/img/' + img + '.jpg" alt="" loading="lazy"><span class="sc-n">0' + (i + 1) + ' / 0' + SERVICES.length + '</span></div>' +
             '<div class="sc-txt"><span class="pill">' + s.tag + '</span><p class="sc-q">' + esc(s.q) + '</p><h3>' + esc(s.short) + '</h3><p>' + esc(s.solution) + '</p>' +
             '<a class="textlink sol-link" href="#' + s.slug + '">' + esc(s.cta) + ' <span class="arr-dot">' + I.arrow + '</span></a></div>' +
@@ -760,23 +760,66 @@
     };
   }
 
-  /* Soluciones en el teléfono: collage que se arma al bajar y tarjetas apiladas */
+  /* Soluciones en el teléfono: la tarjeta azul crece hasta llenar la pantalla (como en el computador)
+     y después las soluciones llegan como tarjetas que se apilan. Solo se animan transform, opacity y
+     clip-path, y el avance se suaviza en cada cuadro para que no se sienta entrecortado. */
   function mobileSvcScroller(stage) {
-    var intro = $('.svc-mintro', stage), cards = $$('.sc', stage);
+    var ms = $('.svc-mstage', stage);
+    if (!ms) return function () {};
+    var sticky = $('.ms-sticky', ms), slot = $('.ms-slot', ms), bg = $('.ms-bg', ms), h = $('.ms-h', ms), hl = $('.ms-hl', ms);
+    var ta = $('.ms-a', ms), tb = $('.ms-b', ms);
+    var cards = $$('.sc', stage), ins = cards.map(function (c) { return $('.sc-in', c); });
+    var shades = cards.map(function (c) { return $('.sc-shade', c); }), pics = cards.map(function (c) { return $('.sc-img img', c); });
+    var from = [245, 249, 250], to = [23, 59, 102];
+    var geo = null, key = '', cur = -1, target = 0, raf = 0, hh = 76, last = {};
+
+    function measure(vh) {
+      hh = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 76;
+      var st = sticky.getBoundingClientRect(), sl = slot.getBoundingClientRect();
+      geo = { t: sl.top - st.top, l: sl.left - st.left, r: st.right - sl.right, b: st.bottom - sl.bottom, dy: (sl.top + sl.height / 2) - (st.top + st.height / 2) };
+      cards.forEach(function (c, i) { c.style.top = Math.min(hh + 8 + i * 12, vh - c.offsetHeight - 16) + 'px'; });
+    }
+    function set(el, prop, v) { var k = prop + (el.className || ''); if (last[k] === v) return; last[k] = v; el.style[prop] = v; }
+    function render(p) {
+      var e = easeIO(clamp01(p / 0.52)), c = easeIO(clamp01((p - 0.62) / 0.3)), q = 1 - e;
+      var clip = 'inset(' + (geo.t * q).toFixed(1) + 'px ' + (geo.r * q).toFixed(1) + 'px ' + (geo.b * q).toFixed(1) + 'px ' + (geo.l * q).toFixed(1) + 'px round ' + (24 * q).toFixed(1) + 'px)';
+      bg.style.clipPath = clip; bg.style.webkitClipPath = clip;
+      set(bg, 'opacity', (1 - c).toFixed(3));
+      h.style.transform = 'translate3d(0,' + (geo.dy * q).toFixed(1) + 'px,0) scale(' + (1 + 0.06 * e).toFixed(4) + ')';
+      set(h, 'color', 'rgb(' + from.map(function (v, k) { return Math.round(lerp(v, to[k], c)); }).join(',') + ')');
+      hl.classList.toggle('on', c > 0.85);
+      ta.style.transform = 'translate3d(' + (-22 * e).toFixed(2) + '%,' + (28 * e).toFixed(2) + '%,0) scale(' + (1 - 0.12 * e).toFixed(4) + ')';
+      tb.style.transform = 'translate3d(' + (22 * e).toFixed(2) + '%,' + (28 * e).toFixed(2) + '%,0) scale(' + (1 - 0.12 * e).toFixed(4) + ')';
+      var o = clamp01(1 - e * 1.6).toFixed(3); set(ta, 'opacity', o); set(tb, 'opacity', o);
+    }
+    function tick() {
+      raf = 0;
+      var d = target - cur;
+      cur = Math.abs(d) < 0.0004 ? target : cur + d * 0.16;
+      render(cur);
+      if (cur !== target) raf = requestAnimationFrame(tick);
+    }
+
     return function (vh) {
-      if (!intro || !intro.offsetParent) return;
-      var r = intro.getBoundingClientRect();
-      var p = reduce ? 1 : easeIO(clamp01((vh - r.top) / (vh * 0.75)));
-      intro.style.setProperty('--mp', p.toFixed(4));
-      intro.classList.toggle('done', p > .92);
-      var hh = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 76;
-      cards.forEach(function (c, i) {
-        var nx = cards[i + 1], k = 0;
-        // Si la tarjeta es más alta que la pantalla, se ancla más arriba para que su final (y el enlace) alcance a verse.
-        c.style.top = Math.min(hh + 8 + i * 12, vh - c.offsetHeight - 16) + 'px';
-        if (nx && !reduce) { var a = c.getBoundingClientRect(), b = nx.getBoundingClientRect(); k = clamp01(1 - (b.top - a.top) / a.height); }
-        c.style.setProperty('--k', k.toFixed(4));
-        if (!c.classList.contains('in') && c.getBoundingClientRect().top < vh * .88) c.classList.add('in');
+      if (!ms.offsetParent) return;
+      var k2 = vh + 'x' + window.innerWidth;
+      if (k2 !== key || !geo) { key = k2; measure(vh); }
+      // Escena de la tarjeta azul
+      if (reduce) { if (cur < 0) { ms.classList.add('ms-static'); measure(vh); cur = 0; render(0); } }
+      else {
+        var r = ms.getBoundingClientRect(), len = r.height - sticky.offsetHeight;
+        target = clamp01(-r.top / len);
+        if (cur < 0) { cur = target; render(cur); }
+        else if (!raf) raf = requestAnimationFrame(tick);
+      }
+      // Tarjetas apiladas: primero se leen todas las posiciones y luego se escribe.
+      var rects = cards.map(function (c) { return c.getBoundingClientRect(); });
+      rects.forEach(function (a, i) {
+        var nb = rects[i + 1], kk = nb ? clamp01(1 - (nb.top - a.top) / a.height) : 0;
+        ins[i].style.transform = 'scale(' + (1 - 0.06 * kk).toFixed(4) + ')';
+        shades[i].style.opacity = (kk * 0.22).toFixed(3);
+        pics[i].style.transform = 'scale(' + (1.04 + 0.08 * kk).toFixed(4) + ')';
+        if (a.top < vh * 0.9) cards[i].classList.add('in');
       });
     };
   }
