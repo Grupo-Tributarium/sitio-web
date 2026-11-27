@@ -119,7 +119,8 @@
       '<img class="contact-araucaria" data-parallax="-0.08" src="assets/brand/araucaria.png" alt="">' +
       '<div class="container contact-wide">' +
         '<div class="contact-head"><span class="section-label" data-reveal>Contacto</span>' +
-        '<h2 id="contactTitle" data-reveal="split">' + (title || 'No dejes que una contingencia tributaria frene años de trabajo. Elige cómo quieres empezar hoy.') + '</h2></div>' +
+        '<h2 id="contactTitle" data-reveal="split">' + (title || 'No dejes que una contingencia tributaria frene años de trabajo. Elige cómo quieres empezar hoy.') + '</h2>' +
+        '<p class="contact-office" data-reveal style="--d:150ms"><span>Oficina</span> <a href="https://www.google.com/maps/search/?api=1&query=Pedro%20de%20Valdivia%20273%2C%20Providencia%2C%20Santiago%2C%20Chile" target="_blank" rel="noopener">Pedro de Valdivia 273, of. 1406, Providencia, Santiago</a></p></div>' +
         '<div class="channels" data-stagger>' +
           '<div class="ch ch-wa"><div style="display:grid;gap:1rem"><span class="ch-k"><b>1</b> Atención inmediata</span><h3>¿Es urgente? Escríbenos ahora.</h3><p>Embargos, facturas bloqueadas o una notificación que no entiendes. Cuéntanos tu caso por WhatsApp y un abogado te orienta.</p></div>' +
             '<div style="display:grid;gap:.75rem">' + waBtn('', 'Escribir por WhatsApp') + '<span class="num">Número: <span data-wa-num></span></span></div></div>' +
