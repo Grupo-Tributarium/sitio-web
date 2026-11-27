@@ -292,6 +292,14 @@
           '<div class="row"><span>Prescripción 2019</span><span class="pill">En trámite</span></div></div>' +
       '</div>' +
       '<div class="svc-final">' +
+        '<div class="svc-mintro" aria-hidden="true">' +
+          '<div class="mi mi-a"><img src="assets/img/socios.jpg" alt="" loading="lazy"></div>' +
+          '<div class="mi mi-b"><img src="assets/img/notas.jpg" alt="" loading="lazy"></div>' +
+          '<div class="mi mi-d"><span class="k">Estado del caso · ejemplo</span>' +
+            '<div class="row"><span>Convenio TGR</span><span class="pill pill--live">Aprobado</span></div>' +
+            '<div class="row"><span>Facturación SII</span><span class="pill pill--live">Habilitada</span></div>' +
+            '<div class="row"><span>Prescripción 2019</span><span class="pill">En trámite</span></div></div>' +
+        '</div>' +
         '<div class="svc-head"><h2 id="solTitle">Te ayudamos a solucionar los problemas tributarios de <span class="hl-pyme">tu pyme</span>.</h2><a class="svc-arrow" href="#soluciones-detalle" aria-label="Bajar a los problemas y soluciones"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 4v15M5.5 12.5L12 19l6.5-6.5"/></svg></a></div>' +
         '<div class="svc-tabs" id="soluciones-detalle">' +
           '<div class="tabbar" role="tablist" aria-label="Soluciones por problema">' + SERVICES.map(function (s, i) { return '<button type="button" role="tab" id="tab-' + i + '" aria-controls="panel-' + i + '" aria-selected="' + (i === 0) + '" tabindex="' + (i === 0 ? 0 : -1) + '">' + esc(s.q) + '</button>'; }).join('') + '<span class="tab-ind"><i></i></span></div>' +
@@ -302,6 +310,14 @@
               '<div class="img"><img src="assets/img/' + img + '.jpg" alt="" loading="lazy"></div></div>';
           }).join('') + '</div>' +
         '</div>' +
+        '<div class="svc-stack" id="soluciones-stack">' + SERVICES.map(function (s, i) {
+          var img = { 'convenio-especial-tgr': 'convenio', 'desbloqueo-sii': 'sii', 'prescripcion-tributaria': 'prescripcion', 'liquidacion-y-reestructuracion': 'liquidacion' }[s.slug];
+          return '<article class="sc" style="--i:' + i + '"><div class="sc-in">' +
+            '<div class="sc-img"><img src="assets/img/' + img + '.jpg" alt="" loading="lazy"><span class="sc-n">0' + (i + 1) + ' / 0' + SERVICES.length + '</span></div>' +
+            '<div class="sc-txt"><span class="pill">' + s.tag + '</span><p class="sc-q">' + esc(s.q) + '</p><h3>' + esc(s.short) + '</h3><p>' + esc(s.solution) + '</p>' +
+            '<a class="textlink sol-link" href="#' + s.slug + '">' + esc(s.cta) + ' <span class="arr-dot">' + I.arrow + '</span></a></div>' +
+          '</div></article>';
+        }).join('') + '</div>' +
       '</div>' +
     '</div></section>' +
 
@@ -484,6 +500,7 @@
       return;
     }
     var el = document.getElementById(id); if (!el) return;
+    if (id === 'soluciones-detalle' && !el.offsetParent) el = document.getElementById('soluciones') || el;
     var y = el.getBoundingClientRect().top + window.scrollY - 84;
     window.scrollTo({ top: Math.max(0, y), behavior: smooth && !reduce ? 'smooth' : 'auto' });
   }
@@ -658,7 +675,7 @@
       scrollers.push(function (vh) { var r = el.parentNode.getBoundingClientRect(); var c = r.top + r.height / 2 - vh / 2; var lim = el.classList.contains('contact-araucaria') ? 400 : r.height * 0.09; var v = Math.max(-lim, Math.min(lim, c * k)); el.style.setProperty('--py', v.toFixed(1) + 'px'); });
     });
     var stage = $('#soluciones.svc', app);
-    if (stage) scrollers.push(stageScroller(stage));
+    if (stage) { scrollers.push(stageScroller(stage)); scrollers.push(mobileSvcScroller(stage)); }
     var steps = $('#steps', app);
     if (steps) {
       var fill = $('#railFill', app), items = $$('.step', steps), phase = $('#phase', app);
@@ -743,6 +760,27 @@
     };
   }
 
+  /* Soluciones en el teléfono: collage que se arma al bajar y tarjetas apiladas */
+  function mobileSvcScroller(stage) {
+    var intro = $('.svc-mintro', stage), cards = $$('.sc', stage);
+    return function (vh) {
+      if (!intro || !intro.offsetParent) return;
+      var r = intro.getBoundingClientRect();
+      var p = reduce ? 1 : easeIO(clamp01((vh - r.top) / (vh * 0.75)));
+      intro.style.setProperty('--mp', p.toFixed(4));
+      intro.classList.toggle('done', p > .92);
+      var hh = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 76;
+      cards.forEach(function (c, i) {
+        var nx = cards[i + 1], k = 0;
+        // Si la tarjeta es más alta que la pantalla, se ancla más arriba para que su final (y el enlace) alcance a verse.
+        c.style.top = Math.min(hh + 8 + i * 12, vh - c.offsetHeight - 16) + 'px';
+        if (nx && !reduce) { var a = c.getBoundingClientRect(), b = nx.getBoundingClientRect(); k = clamp01(1 - (b.top - a.top) / a.height); }
+        c.style.setProperty('--k', k.toFixed(4));
+        if (!c.classList.contains('in') && c.getBoundingClientRect().top < vh * .88) c.classList.add('in');
+      });
+    };
+  }
+
   /* Pestañas de soluciones */
   var tabTimer = null, tabUser = false, TAB_DUR = 7000;
   function stopAuto() { clearTimeout(tabTimer); tabTimer = null; var ind = document.querySelector('.tab-ind'); if (ind) ind.classList.remove('run'); }
@@ -758,6 +796,7 @@
   }
   function startTabs(root) {
     if (tabUser || tabTimer || reduce) return;
+    var tb = $('.tabbar', root); if (!tb || !tb.offsetParent) return;
     var ind = $('.tab-ind', root);
     ind.classList.remove('run'); void ind.offsetWidth; ind.style.setProperty('--dur', TAB_DUR + 'ms'); ind.classList.add('run');
     tabTimer = setTimeout(function () {
