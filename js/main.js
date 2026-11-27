@@ -1,8 +1,8 @@
 (function () {
   'use strict';
   /* ===== Configuración ===== */
-  var WA_NUMBER = '56900000000';          // Reemplazar por el número real del estudio
-  var WA_LABEL = '+56 9 0000 0000';
+  var WA_NUMBER = '56965210413';          // Número de WhatsApp del estudio (sin + ni espacios)
+  var WA_LABEL = '+56 9 6521 0413';
   var WA_URL = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent('Hola, necesito evaluar un caso tributario de mi empresa.');
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
