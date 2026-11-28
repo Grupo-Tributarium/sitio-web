@@ -952,7 +952,7 @@
       header.classList.toggle('is-scrolled', window.scrollY > 12);
       document.body.classList.toggle('compact', window.scrollY > 60);
       var hc = document.getElementById('heroCard');
-      document.body.classList.toggle('on-hero', !!hc && hc.getBoundingClientRect().bottom > 90);
+      document.body.classList.toggle('on-hero', !!hc && window.scrollY < 8);
       var vh = window.innerHeight;
       scrollers.forEach(function (f) { f(vh); });
     });

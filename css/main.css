@@ -204,7 +204,7 @@ body:not(.has-hero) #app { padding-top: 92px; }
 
 /* ---------- Hero (fotografía a sangre con bordes redondeados) ---------- */
 .hero { padding: var(--hero-inset); padding-top: calc(var(--hero-inset) + env(safe-area-inset-top, 0px) * 0); }
-.hero-card { --p: 0; --r: clamp(18px, 2.2vw, 32px); --n: clamp(92px, 8.6vw, 132px); position: relative; isolation: isolate; height: clamp(600px, calc(100svh - 2 * var(--hero-inset)), 980px); border-radius: var(--r); overflow: hidden; background: var(--color-primary); }
+.hero-card { --p: 0; --r: clamp(18px, 2.2vw, 32px); --n: clamp(92px, 8.6vw, 132px); position: relative; isolation: isolate; height: clamp(600px, calc(100svh - 2 * var(--hero-inset)), 980px); border-radius: var(--r); border-bottom-right-radius: 0; overflow: hidden; background: var(--color-primary); }
 .hero-photo { position: absolute; inset: 0; z-index: -2; }
 .hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 30% 30%; transform: translateY(calc(var(--p) * 8%)) scale(calc(1.02 + var(--p) * .08)); transform-origin: 35% 30%; }
 .motion .hero-photo { transform: scale(1.12); opacity: .2; transition: transform 2s var(--ease-editorial), opacity 1.1s var(--ease-standard); }
