@@ -466,9 +466,10 @@
   /* ===== Política de privacidad y cookies =====
      Completar LEGAL con los datos del estudio. Mientras un valor esté entre corchetes, se muestra marcado como pendiente. */
   var LEGAL = {
-    razonSocial: '[Razón social]',
-    rut: '[RUT]',
-    correo: 'hola@[dominio].cl',
+    razonSocial: 'Pezoa & Asociados Limitada',
+    rut: '78.450.484-0',
+    representante: 'Javier Ignacio Pezoa Mundaca',
+    correo: 'contacto@cplabogados.cl',  // provisorio: cambiar cuando exista el correo definitivo
     actualizado: '27 de noviembre de 2026'
   };
   function legalVal(v) { return /\[.*\]/.test(v) ? '<span class="ph">' + v + '</span>' : v; }
@@ -476,7 +477,7 @@
     var mail = /\[.*\]/.test(LEGAL.correo) ? legalVal(LEGAL.correo) : '<a href="mailto:' + LEGAL.correo + '">' + LEGAL.correo + '</a>';
     var secs = [
       ['responsable', '1. Quién es responsable de tus datos',
-        '<p>El responsable del tratamiento de tus datos personales es ' + legalVal(LEGAL.razonSocial) + ', RUT ' + legalVal(LEGAL.rut) + ', que opera bajo el nombre Tributarium, con domicilio en Pedro de Valdivia 273, oficina 1406, Providencia, Santiago, Chile.</p>' +
+        '<p>El responsable del tratamiento de tus datos personales es ' + legalVal(LEGAL.razonSocial) + ', RUT ' + legalVal(LEGAL.rut) + ', que opera bajo el nombre Tributarium, con domicilio en Pedro de Valdivia 273, oficina 1406, Providencia, Santiago, Chile. Su representante legal es ' + LEGAL.representante + '.</p>' +
         '<p>Para cualquier consulta sobre tus datos personales o para ejercer tus derechos, escríbenos a ' + mail + '.</p>' +
         '<p>Tratamos tus datos conforme a la Ley N.° 19.628 sobre Protección de la Vida Privada y a la Ley N.° 21.719, que regula la protección y el tratamiento de los datos personales y crea la Agencia de Protección de Datos Personales.</p>'],
       ['datos', '2. Qué datos tratamos',
