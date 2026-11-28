@@ -11,7 +11,8 @@ Sitio estático (HTML, CSS y JavaScript sin dependencias) para Tributarium, abog
 │   └── main.css          Todos los estilos: tokens de marca, componentes y animaciones
 ├── js/
 │   ├── main.js           Contenido (servicios, preguntas) y lógica: rutas, animaciones, acordeones
-│   ├── gtm-init.js       Inicio de Google Tag Manager
+│   ├── gtm-init.js       Consent Mode v2 (todo denegado por defecto) e inicio de Google Tag Manager
+│   ├── cookies.js        Banner de cookies y modal de preferencias
 │   └── posts.js          Artículos del blog (generado automáticamente, no editar)
 ├── content/blog/         Un archivo .md por artículo del blog
 ├── scripts/
@@ -56,7 +57,8 @@ El único paso de build es generar el blog (`node scripts/build-blog.mjs`, sin d
 - Las rutas internas (`#desbloqueo-sii`, `#blog`, etc.) solo aceptan valores de una lista fija, así que la URL no puede inyectar contenido en la página.
 - Los enlaces externos (WhatsApp) abren con `rel="noopener"`.
 - `_headers` y `vercel.json` activan: Content-Security-Policy (scripts propios y de Google Tag Manager), protección contra iframes de terceros, HTTPS obligatorio (HSTS), `nosniff`, `Referrer-Policy` y `Permissions-Policy` (sin cámara, micrófono ni ubicación).
-- Google Tag Manager (contenedor `GTM-KJN464LP`): se carga en `index.html` y se inicializa en `js/gtm-init.js`. La política de seguridad permite Tag Manager, Google Analytics 4, Google Ads y el modo vista previa. Si en GTM se agregan etiquetas de otros proveedores (Meta, LinkedIn, Hotjar...) o etiquetas de HTML personalizado, hay que sumar sus dominios en `_headers` y `vercel.json`; si no, el navegador las bloquea.
+- Cookies y Google Consent Mode v2: `js/gtm-init.js` se carga antes de Tag Manager y deja todo denegado por defecto (o aplica la elección guardada en `localStorage`, clave `tributarium_cookie_consent_v1`). `js/cookies.js` muestra el banner y el modal; al guardar envía `gtag('consent', 'update', ...)` y el evento `cookie_consent_update` al `dataLayer`. «Preferencias de cookies», en el pie, reabre el modal (también sirve `window.dispatchEvent(new Event('tributarium-open-cookie-settings'))`). La política está en `#privacidad`; sus datos legales se completan en `LEGAL`, en `js/main.js`.
+- Google Tag Manager (contenedor `GTM-KJN464LP`): se carga en `index.html` después de `js/gtm-init.js`. La política de seguridad permite Tag Manager, Google Analytics 4, Google Ads y el modo vista previa. Si en GTM se agregan etiquetas de otros proveedores (Meta, LinkedIn, Hotjar...) o etiquetas de HTML personalizado, hay que sumar sus dominios en `_headers` y `vercel.json`; si no, el navegador las bloquea.
 - Fuentes: se cargan desde Google Fonts, permitido en la política de seguridad. Si se alojan en el propio sitio, se pueden quitar esos dominios de la política.
 
 ## Blog: cómo publicar un artículo

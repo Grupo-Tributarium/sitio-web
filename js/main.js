@@ -462,6 +462,81 @@
     '<section class="section section--mint"><div class="container"><div class="sec-head"><div class="t"><span class="section-label" data-reveal>Sigue leyendo</span><h2 data-reveal="split">Otros artículos para tu empresa</h2></div></div><div class="posts">' + rel.map(postCard).join('') + '</div></div></section>';
   }
 
+
+  /* ===== Política de privacidad y cookies =====
+     Completar LEGAL con los datos del estudio. Mientras un valor esté entre corchetes, se muestra marcado como pendiente. */
+  var LEGAL = {
+    razonSocial: '[Razón social]',
+    rut: '[RUT]',
+    correo: 'hola@[dominio].cl',
+    actualizado: '27 de noviembre de 2026'
+  };
+  function legalVal(v) { return /\[.*\]/.test(v) ? '<span class="ph">' + v + '</span>' : v; }
+  function viewPrivacy() {
+    var mail = /\[.*\]/.test(LEGAL.correo) ? legalVal(LEGAL.correo) : '<a href="mailto:' + LEGAL.correo + '">' + LEGAL.correo + '</a>';
+    var secs = [
+      ['responsable', '1. Quién es responsable de tus datos',
+        '<p>El responsable del tratamiento de tus datos personales es ' + legalVal(LEGAL.razonSocial) + ', RUT ' + legalVal(LEGAL.rut) + ', que opera bajo el nombre Tributarium, con domicilio en Pedro de Valdivia 273, oficina 1406, Providencia, Santiago, Chile.</p>' +
+        '<p>Para cualquier consulta sobre tus datos personales o para ejercer tus derechos, escríbenos a ' + mail + '.</p>' +
+        '<p>Tratamos tus datos conforme a la Ley N.° 19.628 sobre Protección de la Vida Privada y a la Ley N.° 21.719, que regula la protección y el tratamiento de los datos personales y crea la Agencia de Protección de Datos Personales.</p>'],
+      ['datos', '2. Qué datos tratamos',
+        '<ul><li><strong>Datos que nos entregas al contactarnos:</strong> nombre, empresa, teléfono, correo y la información sobre tu caso que nos compartas por WhatsApp, correo, formulario o videollamada.</li>' +
+        '<li><strong>Datos de navegación:</strong> solo si lo aceptas, información sobre cómo usas este sitio (páginas vistas, tipo de dispositivo y navegador, ubicación aproximada y origen de la visita), mediante cookies. Más detalles en la sección 8.</li></ul>' +
+        '<p>La información que nos compartes sobre tu caso está protegida, además, por el secreto profesional del abogado.</p>'],
+      ['finalidades', '3. Para qué usamos tus datos y con qué base legal',
+        '<ul><li><strong>Responder tus consultas y evaluar tu caso</strong>, a partir de tu solicitud y de tu consentimiento.</li>' +
+        '<li><strong>Prestarte los servicios legales que contrates</strong>, en cumplimiento del contrato.</li>' +
+        '<li><strong>Cumplir obligaciones legales</strong>, por ejemplo tributarias y contables.</li>' +
+        '<li><strong>Medir y mejorar el sitio</strong> (cookies analíticas), solo con tu consentimiento.</li>' +
+        '<li><strong>Medir y mostrar publicidad</strong> (cookies de marketing), solo con tu consentimiento.</li></ul>' +
+        '<p>Puedes retirar tu consentimiento en cualquier momento, sin que eso afecte lo realizado antes de retirarlo.</p>'],
+      ['destinatarios', '4. Con quién compartimos tus datos',
+        '<p>No vendemos ni arrendamos tus datos personales. Solo los compartimos con:</p>' +
+        '<ul><li><strong>Proveedores que nos prestan servicios</strong> y tratan los datos por encargo nuestro: alojamiento del sitio web, Google (Tag Manager, Analytics y Ads, según tu elección de cookies), Meta (WhatsApp y, si lo aceptas, publicidad) y herramientas de correo y agenda.</li>' +
+        '<li><strong>Autoridades y tribunales</strong>, cuando la ley lo exija o cuando sea necesario para representarte ante el SII, la Tesorería General de la República o los tribunales, con tu autorización.</li></ul>'],
+      ['transferencias', '5. Transferencias internacionales',
+        '<p>Algunos de nuestros proveedores almacenan o procesan datos fuera de Chile, por ejemplo en Estados Unidos. En esos casos exigimos que ofrezcan garantías adecuadas para proteger tus datos, conforme a la ley chilena.</p>'],
+      ['conservacion', '6. Cuánto tiempo conservamos tus datos',
+        '<p>Conservamos tus datos mientras sean necesarios para la finalidad por la que los recopilamos y, después, durante los plazos que exige la ley (por ejemplo, obligaciones tributarias o plazos de prescripción de acciones). Las cookies duran lo indicado en la sección 8.</p>'],
+      ['derechos', '7. Tus derechos como titular de datos personales',
+        '<p>Como titular de tus datos personales tienes derecho a:</p>' +
+        '<dl><dt>Acceso</dt><dd>Saber si tratamos tus datos, cuáles, para qué y con quién los compartimos.</dd>' +
+        '<dt>Rectificación</dt><dd>Corregir datos inexactos, desactualizados o incompletos.</dd>' +
+        '<dt>Supresión</dt><dd>Pedir que eliminemos tus datos cuando ya no sean necesarios o retires tu consentimiento, salvo que la ley nos obligue a conservarlos.</dd>' +
+        '<dt>Oposición</dt><dd>Oponerte a que tratemos tus datos para una finalidad determinada, como la publicidad.</dd>' +
+        '<dt>Portabilidad</dt><dd>Recibir tus datos en un formato estructurado y de uso común, o pedir que los transfiramos a otro responsable.</dd>' +
+        '<dt>Bloqueo</dt><dd>Pedir que suspendamos temporalmente el tratamiento de tus datos mientras resolvemos una solicitud tuya.</dd></dl>' +
+        '<p><strong>Cómo ejercerlos:</strong> escríbenos a ' + mail + ' indicando tu nombre, un medio para verificar tu identidad y el derecho que quieres ejercer. El trámite es gratuito y te responderemos en un plazo de hasta 30 días corridos.</p>' +
+        '<p>Si no quedas conforme con nuestra respuesta, puedes presentar un reclamo ante la Agencia de Protección de Datos Personales.</p>'],
+      ['cookies', '8. Cookies',
+        '<p>Las cookies son pequeños archivos que el sitio guarda en tu navegador. Usamos tres categorías:</p>' +
+        '<div class="table-wrap"><table class="policy-table"><thead><tr><th scope="col">Categoría</th><th scope="col">Para qué</th><th scope="col">Ejemplos y duración</th></tr></thead><tbody>' +
+          '<tr><td>Estrictamente necesarias</td><td>Que el sitio funcione y sea seguro, y recordar tu elección de cookies. Siempre activas.</td><td><code>tributarium_cookie_consent_v1</code> (almacenamiento local): hasta que cambies tu elección o borres los datos del navegador.</td></tr>' +
+          '<tr><td>Analíticas y rendimiento</td><td>Medir cómo se usa el sitio con Google Analytics 4, a través de Google Tag Manager. Solo con tu consentimiento.</td><td><code>_ga</code>, <code>_ga_*</code>: hasta 2 años.</td></tr>' +
+          '<tr><td>Marketing y publicidad</td><td>Medir y mostrar anuncios en plataformas como Google Ads y Meta. Solo con tu consentimiento.</td><td><code>_gcl_au</code> (Google Ads), <code>_fbp</code> (Meta): hasta 90 días.</td></tr>' +
+        '</tbody></table></div>' +
+        '<p><strong>Cómo cambiar o retirar tu consentimiento:</strong> en cualquier momento, desde <button type="button" class="textlink" data-cookie-settings style="background-color:transparent;border:0;padding:0 0 2px;font:inherit;font-weight:500;cursor:pointer">Preferencias de cookies</button>, al pie de cada página. Si retiras tu consentimiento, borramos las cookies analíticas o de publicidad que ya estuvieran guardadas. También puedes borrar las cookies desde la configuración de tu navegador.</p>'],
+      ['seguridad', '9. Seguridad',
+        '<p>Aplicamos medidas técnicas y organizativas para proteger tus datos, como conexiones cifradas (HTTPS) y acceso restringido a la información de los casos.</p>'],
+      ['cambios', '10. Cambios a esta política',
+        '<p>Podemos actualizar esta política. Publicaremos aquí cualquier cambio, con su fecha de actualización.</p>']
+    ];
+    var toc = secs.map(function (x) { return '<a href="#privacidad" data-target="' + x[0] + '">' + x[1].replace(/^\d+\.\s*/, '') + '</a>'; }).join('');
+    return '' +
+    '<div class="policy"><div class="container"><header class="art-head">' +
+      '<nav class="crumbs" aria-label="Ruta" style="margin-bottom:0"><a href="#inicio">Inicio</a><span aria-hidden="true">/</span><span aria-current="page">Política de privacidad</span></nav>' +
+      '<h1>Política de privacidad y cookies</h1>' +
+      '<div class="art-meta"><span>Última actualización: ' + LEGAL.actualizado + '</span></div>' +
+    '</header>' +
+    '<div class="art-layout"><article class="art-body"><div class="prose">' +
+      '<p class="lead">En Tributarium cuidamos los datos que nos confías. Aquí te explicamos qué datos tratamos, para qué, con quién los compartimos y cómo ejercer tus derechos.</p>' +
+      secs.map(function (x) { return '<h2 id="' + x[0] + '">' + x[1] + '</h2>' + x[2]; }).join('') +
+    '</div></article>' +
+    '<aside class="art-aside"><div class="stick"><nav class="toc" aria-label="En esta página"><span class="section-label" style="margin-bottom:.5rem">En esta página</span>' + toc + '</nav>' +
+      '<div class="cta-card"><strong>Tus cookies</strong><p>Revisa o cambia en cualquier momento qué cookies aceptas.</p><button type="button" class="button button--accent" data-cookie-settings>Preferencias de cookies</button></div>' +
+    '</div></aside></div></div></div>';
+  }
+
   /* ===== Router ===== */
   var SECTION_ROUTES = { 'soluciones': 1, 'soluciones-detalle': 1, 'como-trabajamos': 1, 'contacto': 1, 'recursos': 1, 'por-que': 1 };
   var app = $('#app'), currentView = null;
@@ -476,6 +551,7 @@
     if (svc(h)) return { view: h, html: function () { return viewService(svc(h)); } };
     if (h === 'nosotros') return { view: h, html: viewAbout };
     if (h === 'blog') return { view: h, html: viewBlog };
+    if (h === 'privacidad') return { view: h, html: viewPrivacy };
     if (h.indexOf('articulo-') === 0 && post(h.slice(9))) return { view: h, html: function () { return viewArticle(post(h.slice(9))); } };
     return { view: 'home', html: viewHome };
   }
